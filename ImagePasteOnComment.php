@@ -12,6 +12,6 @@ class ImagePasteOnCommentPlugin extends MantisPlugin {
 
         $this->author = 'Ryuji Ebine';         # 作成者
         $this->contact = 'rebine@redalarm.jp';        # 作成者のアドレス
-        $this->url = '';            # サポートページ
+        $this->url = 'https://github.com/rebine/Mantis_ImagePasteOnComment';            # サポートページ
     }
 }
