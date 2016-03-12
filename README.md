@@ -1,0 +1,2 @@
+# Mantis_ImagePasteOnComment
+Mantis Plugin ImagePasteOnComment develop
