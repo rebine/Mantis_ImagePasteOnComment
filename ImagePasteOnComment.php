@@ -21,10 +21,65 @@ class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
   }
 
   function hooks() {
-    $hooks = parent::hooks();
-    $hooks['EVENT_LAYOUT_CONTENT_BEGIN'] = 'string_process_image_link';
-    return $hooks;
-  }
+                return array(
+                        'EVENT_DISPLAY_TEXT'            => 'text',                      # Text String Display
+                        'EVENT_DISPLAY_FORMATTED'       => 'formatted',         # Formatted String Display
+                        'EVENT_DISPLAY_RSS'                     => 'rss',                       # RSS String Display
+                        'EVENT_DISPLAY_EMAIL'           => 'email',                     # Email String Display
+                );
+  } // f hooks
+
+  public function install() {
+    return true;
+  } // f install
+
+
+        /**
+         * Formatted text processing.
+         * @param string Event name
+         * @param string Unformatted text
+         * @param boolean Multiline text
+         * @return multi Array with formatted text and multiline paramater
+         */
+        function formatted( $p_event, $p_string, $p_multiline = true ) {
+                static $s_text, $s_urls, $s_buglinks, $s_vcslinks;
+
+    error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
+    $t_string = $this->string_process_image_link( $p_string );
+                return $t_string;
+        }
+
+        /**
+         * RSS text processing.
+         * @param string Event name
+         * @param string Unformatted text
+         * @return string Formatted text
+         */
+        function rss( $p_event, $p_string ) {
+                static $s_text, $s_urls, $s_buglinks, $s_vcslinks;
+
+    error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
+    $t_string = $this->string_process_image_link( $p_string );
+
+                return $t_string;
+        }
+
+        /**
+         * Email text processing.
+         * @param string Event name
+         * @param string Unformatted text
+         * @return string Formatted text
+         */
+        function email( $p_event, $p_string ) {
+                static $s_text, $s_buglinks, $s_vcslinks;
+
+    error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
+    $t_string = $this->string_process_image_link( $p_string );
+
+
+                return $t_string;
+        }
+
 
   /**
    * return an href anchor that links to a bug COMMENT page for the given images uploaded
@@ -54,7 +109,7 @@ _HTML_;
    * @return string
    */
   function string_process_image_link( $p_string){
-    $p_string = preg_replace_callback( '/(^|[^\w])' . preg_quote( '%[', '/' ) . '(\d+)'.preg_quote( ']', '/' ).'(.*)\b/','string_get_bug_image_link',$p_string );
+    $p_string = preg_replace_callback( '/(^|[^\w])' . preg_quote( '%[', '/' ) . '(\d+)'.preg_quote( ']', '/' ).'(.*)\b/',array($this,'string_get_bug_image_link'),$p_string );
         return $p_string ;
   } // f string_process_image_link
 
