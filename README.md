@@ -46,3 +46,8 @@ MantisBT Coreよりも小さくしてください。
 # 募集
 - 説明の素敵な英訳
 - スタイルシートの素敵なサンプル
+
+# スクリーンショットに出ている画像について
+https://jp.fotolia.com/id/51565496
+作者：christine krahl
+fotoliaにてXS画像を購入して使いました。
