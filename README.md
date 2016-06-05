@@ -5,7 +5,7 @@ Mantis Plugin ImagePasteOnComment develop.
 Mantis bt 1.2.0 higher.
 
 This plugin require high priority than 'MantisBT Core'.
-(Screenshots/ImagePasteOnComment.sc01.png)
+![priority](Screenshots/ImagePasteOnComment.sc01.png)
 
 # Usage
 %[file_id]
@@ -13,5 +13,5 @@ This plugin require high priority than 'MantisBT Core'.
 file_id is below example.
 
 http://example.com/mantis/file_download.php?file_id=1&type=bug
-(Screenshots/ImagePasteOnComment.sc02.png)
+![file id](Screenshots/ImagePasteOnComment.sc02.png)
 
