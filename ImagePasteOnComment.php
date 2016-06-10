@@ -10,7 +10,7 @@ class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '0.1';
+    $this->version = '0.2';
     $this->requires = array(
       'MantisCore' => '1.2.0',
     );
@@ -21,11 +21,12 @@ class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
   }
 
   function hooks() {
-                return array(
-                        'EVENT_DISPLAY_TEXT'            => 'text',                      # Text String Display
-                        'EVENT_DISPLAY_FORMATTED'       => 'formatted',         # Formatted String Display
-                        'EVENT_DISPLAY_RSS'                     => 'rss',                       # RSS String Display
-                        'EVENT_DISPLAY_EMAIL'           => 'email',                     # Email String Display
+    return array(
+      'EVENT_DISPLAY_TEXT'            => 'text',                      # Text String Display
+      'EVENT_DISPLAY_FORMATTED'       => 'formatted',                 # Formatted String Display
+      'EVENT_DISPLAY_RSS'             => 'rss',                       # RSS String Display
+      'EVENT_DISPLAY_EMAIL'           => 'email',                     # Email String Display
+      'EVENT_LAYOUT_RESOURCES'        => 'css',                       # CSS
                 );
   } // f hooks
 
@@ -34,51 +35,50 @@ class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
   } // f install
 
 
-        /**
-         * Formatted text processing.
-         * @param string Event name
-         * @param string Unformatted text
-         * @param boolean Multiline text
-         * @return multi Array with formatted text and multiline paramater
-         */
-        function formatted( $p_event, $p_string, $p_multiline = true ) {
-                static $s_text, $s_urls, $s_buglinks, $s_vcslinks;
+  /**
+   * Formatted text processing.
+   * @param string Event name
+   * @param string Unformatted text
+   * @param boolean Multiline text
+   * @return multi Array with formatted text and multiline paramater
+   */
+  function formatted( $p_event, $p_string, $p_multiline = true ) {
+    static $s_text, $s_urls, $s_buglinks, $s_vcslinks;
 
-    error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
+    //error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
     $t_string = $this->string_process_image_link( $p_string );
-                return $t_string;
-        }
+    return $t_string;
+  }
 
-        /**
-         * RSS text processing.
-         * @param string Event name
-         * @param string Unformatted text
-         * @return string Formatted text
-         */
-        function rss( $p_event, $p_string ) {
-                static $s_text, $s_urls, $s_buglinks, $s_vcslinks;
+  /**
+   * RSS text processing.
+   * @param string Event name
+   * @param string Unformatted text
+   * @return string Formatted text
+   */
+  function rss( $p_event, $p_string ) {
+    static $s_text, $s_urls, $s_buglinks, $s_vcslinks;
 
-    error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
-    $t_string = $this->string_process_image_link( $p_string );
-
-                return $t_string;
-        }
-
-        /**
-         * Email text processing.
-         * @param string Event name
-         * @param string Unformatted text
-         * @return string Formatted text
-         */
-        function email( $p_event, $p_string ) {
-                static $s_text, $s_buglinks, $s_vcslinks;
-
-    error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
+    // error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
     $t_string = $this->string_process_image_link( $p_string );
 
+    return $t_string;
+  }
 
-                return $t_string;
-        }
+  /**
+   * Email text processing.
+   * @param string Event name
+   * @param string Unformatted text
+   * @return string Formatted text
+   */
+  function email( $p_event, $p_string ) {
+    static $s_text, $s_buglinks, $s_vcslinks;
+
+    //error_log('$test'.print_r($s_buglinks,true)."\n",3,'/tmp/test.log');
+    $t_string = $this->string_process_image_link( $p_string );
+
+    return $t_string;
+  }
 
 
   /**
@@ -96,8 +96,10 @@ class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $security_param  = form_security_param( 'file_show_inline' );
     $image_link      = <<< _HTML_
   <a href="file_download.php?file_id={$p_image_id}&type=bug">
-    <img alt="" style="border: solid 3px #000 ;{$p_image_rate}" src="file_download.php?file_id=${p_image_id}&type=bug&show_inline=1{$security_param}" /> 
-  </a> <br>
+    <img class="ImagePasteOnComment" alt="" style="{$p_image_rate}" 
+         src="file_download.php?file_id=${p_image_id}&type=bug&show_inline=1{$security_param}" >
+  </a> 
+  <br 
 _HTML_;
    
     return $image_link;
@@ -109,8 +111,21 @@ _HTML_;
    * @return string
    */
   function string_process_image_link( $p_string){
-    $p_string = preg_replace_callback( '/(^|[^\w])' . preg_quote( '%[', '/' ) . '(\d+)'.preg_quote( ']', '/' ).'(.*)\b/',array($this,'string_get_bug_image_link'),$p_string );
+    $p_string = preg_replace_callback(
+                '/(^|[^\w])' 
+              . preg_quote( '%[', '/' ) . '(\d+)'.preg_quote( ']', '/' )
+              . '(.*)\b/',array($this,'string_get_bug_image_link'),$p_string 
+                );
         return $p_string ;
   } // f string_process_image_link
+
+  /**
+   * Include css 
+   * @param int $p_event
+   * @return string
+   */
+  function css( $p_event){
+    return '<link href="' . plugin_file( 'ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
+  } // f css
 
 }
