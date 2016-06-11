@@ -4,9 +4,9 @@
 
 require_once( config_get( 'class_path' ) . 'MantisFormattingPlugin.class.php' );
 
-class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
+class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
   function register() {
-    $this->name = 'ImagePasteOnComment';
+    $this->name = 'Mantis_ImagePasteOnComment';
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
@@ -96,7 +96,7 @@ class ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $security_param  = form_security_param( 'file_show_inline' );
     $image_link      = <<< _HTML_
   <a href="file_download.php?file_id={$p_image_id}&type=bug">
-    <img class="ImagePasteOnComment" alt="" style="{$p_image_rate}" 
+    <img class="Mantis_ImagePasteOnComment" alt="" style="{$p_image_rate}" 
          src="file_download.php?file_id=${p_image_id}&type=bug&show_inline=1{$security_param}" >
   </a> 
   <br 
@@ -125,7 +125,7 @@ _HTML_;
    * @return string
    */
   function css( $p_event){
-    return '<link href="' . plugin_file( 'ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
+    return '<link href="' . plugin_file( 'Mantis_ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
   } // f css
 
 }
