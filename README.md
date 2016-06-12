@@ -2,12 +2,14 @@
 Mantis Plugin ImagePasteOnComment develop.
 
 # Requirements
-Mantis bt 1.2.0 higher.
+Mantis bt 1.3.0 higher.
 
 This plugin require high priority than 'MantisBT Core'.
 ![priority](Screenshots/ImagePasteOnComment.sc01.png)
 
 # Usage
+Write comment.
+
 %[file_id],rate100
 
 file_id is below example.
@@ -20,6 +22,8 @@ rate100 is 100% width at comment field.
 # 説明
 英語は下手なので日本語でざっくりと説明すると、
 アップロードした画像をコメントの部分に張り込めるプラグインです。
+1.2.0系では「EVENT_VIEW_BUG_ATTACHMENT」のイベントがなかったので、1.3.0系にしました。
+branchをmantisbt12に分けています。
 
 MantisBTのアップロードされた画像は固有のIDがついているので
 それを%[file_id]の部分に書き込んでもらえれば、プレビュー画像を
@@ -37,7 +41,6 @@ rate10,rate30,rate70,rate100,rate150など、変化させる値も大体こう�
 MantisBT Coreよりも小さくしてください。
 
 # 改良予定
-- CSSをプラグインの作法に沿って設置
 - 基本機能のプレビュー画像はクリックするとダウンロードですが、
 　独自のパッチでコメントフィールドに%[file_id],rate100を挿入するように
 　変更してしまいました。プラグインでどのようにしたらよいのかわからないので

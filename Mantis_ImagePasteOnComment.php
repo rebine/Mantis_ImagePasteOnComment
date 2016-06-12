@@ -10,9 +10,9 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '0.2';
+    $this->version = '0.3';
     $this->requires = array(
-      'MantisCore' => '1.2.0',
+      'MantisCore' => '1.3.0',
     );
 
     $this->author = 'Ryuji Ebine';
@@ -27,6 +27,7 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
       'EVENT_DISPLAY_RSS'             => 'rss',                       # RSS String Display
       'EVENT_DISPLAY_EMAIL'           => 'email',                     # Email String Display
       'EVENT_LAYOUT_RESOURCES'        => 'css',                       # CSS
+      'EVENT_VIEW_BUG_ATTACHMENT'     => 'print_bug_attachment_preview_image',  # Attachment Previw Image 
                 );
   } // f hooks
 
@@ -127,5 +128,30 @@ _HTML_;
   function css( $p_event){
     return '<link href="' . plugin_file( 'Mantis_ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
   } // f css
+
+  /**
+   * Prints the preview of an image file attachment.
+   * @param array $p_attachment An attachment array from within the array returned by the file_get_visible_attachments() function.
+   * @return void
+   */
+  function print_bug_attachment_preview_image( array $p_attachment ) {
+    $t_preview_style = 'border: 0;';
+    $t_max_width = config_get( 'preview_max_width' );
+    if( $t_max_width > 0 ) {
+      $t_preview_style .= ' max-width:' . $t_max_width . 'px;';
+    }
+  
+    $t_max_height = config_get( 'preview_max_height' );
+    if( $t_max_height > 0 ) {
+      $t_preview_style .= ' max-height:' . $t_max_height . 'px;';
+    }
+  
+    $t_title = file_get_field( $p_attachment['id'], 'title' );
+    $t_image_url = $p_attachment['download_url'] . '&show_inline=1' . form_security_param( 'file_show_inline' );
+  
+    echo "\n<div class=\"bug-attachment-preview-image\">";
+    echo '<img src="' . string_attribute( $t_image_url ) . '" alt="' . string_attribute( $t_title ) . '" style="' . string_attribute( $t_preview_style ) . '" />';
+    echo '</div>';
+  } f print_bug_attachment_preview_image
 
 }
