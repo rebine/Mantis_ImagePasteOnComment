@@ -26,8 +26,8 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
       'EVENT_DISPLAY_FORMATTED'       => 'formatted',                 # Formatted String Display
       'EVENT_DISPLAY_RSS'             => 'rss',                       # RSS String Display
       'EVENT_DISPLAY_EMAIL'           => 'email',                     # Email String Display
-      'EVENT_LAYOUT_RESOURCES'        => 'css',                       # CSS
-      'EVENT_VIEW_BUG_ATTACHMENT'     => 'print_bug_attachment_preview_image',  # Attachment Previw Image 
+      'EVENT_LAYOUT_RESOURCES'        => 'resources',                 # CSS JS include
+      'EVENT_VIEW_BUG_ATTACHMENT'     => 'display_click_field',       # Display Insert Tags
                 );
   } // f hooks
 
@@ -96,10 +96,8 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
   
     $security_param  = form_security_param( 'file_show_inline' );
     $image_link      = <<< _HTML_
-  <a href="file_download.php?file_id={$p_image_id}&type=bug">
     <img class="Mantis_ImagePasteOnComment" alt="" style="{$p_image_rate}" 
          src="file_download.php?file_id=${p_image_id}&type=bug&show_inline=1{$security_param}" >
-  </a> 
   <br 
 _HTML_;
    
@@ -121,37 +119,33 @@ _HTML_;
   } // f string_process_image_link
 
   /**
-   * Include css 
+   * Include css ,js
    * @param int $p_event
    * @return string
    */
-  function css( $p_event){
-    return '<link href="' . plugin_file( 'Mantis_ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
-  } // f css
+  function resources( $p_event){
+    $resource  = '<link href="' . plugin_file( 'Mantis_ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
+    $resource .= '<script type="text/javascript" src="' . plugin_file( 'Mantis_ImagePasteOnComment.js' ) . '"></script>';
+    return $resource;
+  } // f resources
 
   /**
-   * Prints the preview of an image file attachment.
-   * @param array $p_attachment An attachment array from within the array returned by the file_get_visible_attachments() function.
+   * Display click for insert field
+   * @param strings $p_event
+   * @param array   $p_attachment An attachment array 
    * @return void
    */
-  function print_bug_attachment_preview_image( array $p_attachment ) {
-    $t_preview_style = 'border: 0;';
-    $t_max_width = config_get( 'preview_max_width' );
-    if( $t_max_width > 0 ) {
-      $t_preview_style .= ' max-width:' . $t_max_width . 'px;';
-    }
-  
-    $t_max_height = config_get( 'preview_max_height' );
-    if( $t_max_height > 0 ) {
-      $t_preview_style .= ' max-height:' . $t_max_height . 'px;';
-    }
-  
-    $t_title = file_get_field( $p_attachment['id'], 'title' );
-    $t_image_url = $p_attachment['download_url'] . '&show_inline=1' . form_security_param( 'file_show_inline' );
-  
-    echo "\n<div class=\"bug-attachment-preview-image\">";
-    echo '<img src="' . string_attribute( $t_image_url ) . '" alt="' . string_attribute( $t_title ) . '" style="' . string_attribute( $t_preview_style ) . '" />';
-    echo '</div>';
-  } f print_bug_attachment_preview_image
+  function display_click_field( $p_event ,$p_attachment ) {
+   
+    $display_field =<<< _HTML_
+    <div id="ImagePasteOnComment_{$p_attachment['id']}" class="Mantis_ImagePasteOnComment_Insert" >
+      << Click this for insert text area
+      ID: {$p_attachment['id']}
+    </div>
+
+_HTML_;
+    return $display_field;
+
+  } // f display_click_field
 
 }
