@@ -4,7 +4,7 @@ Mantis Plugin ImagePasteOnComment develop.
 # Requirements
 Mantis bt 1.3.0 higher.
 
-This plugin require high priority than 'MantisBT Core'.
+This plugin require high priority than 'MantisBT Core Formatting'.
 ![priority](Screenshots/ImagePasteOnComment.sc01.png)
 
 # Usage
