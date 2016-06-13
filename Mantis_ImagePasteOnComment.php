@@ -6,11 +6,11 @@ require_once( config_get( 'class_path' ) . 'MantisFormattingPlugin.class.php' );
 
 class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
   function register() {
-    $this->name = 'Mantis_ImagePasteOnComment';
+    $this->name = 'Mantis ImagePasteOnComment';
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '0.3';
+    $this->version = '1.0.0';
     $this->requires = array(
       'MantisCore' => '1.3.0',
     );
@@ -139,7 +139,7 @@ _HTML_;
    
     $display_field =<<< _HTML_
     <div id="ImagePasteOnComment_{$p_attachment['id']}" class="Mantis_ImagePasteOnComment_Insert" >
-      << Click this for insert text area
+      << Click this for inserting text area
       ID: {$p_attachment['id']}
     </div>
 

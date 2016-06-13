@@ -1,3 +1,8 @@
 img.Mantis_ImagePasteOnComment{
-  border: solid 3px #000 ;
+            border: solid 3px #000 ;
 }
+div.Mantis_ImagePasteOnComment_Insert{
+
+            border: solid 2px azure;
+  background-color: aliceblue;
+  
