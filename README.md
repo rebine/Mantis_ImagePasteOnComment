@@ -52,6 +52,7 @@ MantisBT Core Formattingよりも小さくしてください。
 
 薄い青で「Click this...」と書かれた領域をクリックすると
 テキストエリアに%[1],rate100が自動で入ります。
+![file id](Screenshots/ImagePasteOnComment.sc03.png)
 
 # 改良予定
 - 「EVENT_VIEW_BUG_ATTACHMENT」のreturnに文字列を入れているのに
