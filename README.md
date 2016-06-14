@@ -1,5 +1,5 @@
 # Mantis_ImagePasteOnComment
-Mantis Plugin ImagePasteOnComment develop.
+Mantis Plugin Mantis_ImagePasteOnComment .
 
 # Requirements
 Mantis bt 1.3.0 higher.
