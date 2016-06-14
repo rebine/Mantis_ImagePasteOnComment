@@ -10,7 +10,7 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '1.0.0';
+    $this->version = '1.0.1';
     $this->requires = array(
       'MantisCore' => '1.3.0',
     );
@@ -22,11 +22,11 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
 
   function hooks() {
     return array(
+      'EVENT_LAYOUT_RESOURCES'        => 'resources',                 # CSS JS include
       'EVENT_DISPLAY_TEXT'            => 'text',                      # Text String Display
       'EVENT_DISPLAY_FORMATTED'       => 'formatted',                 # Formatted String Display
       'EVENT_DISPLAY_RSS'             => 'rss',                       # RSS String Display
       'EVENT_DISPLAY_EMAIL'           => 'email',                     # Email String Display
-      'EVENT_LAYOUT_RESOURCES'        => 'resources',                 # CSS JS include
       'EVENT_VIEW_BUG_ATTACHMENT'     => 'display_click_field',       # Display Insert Tags
                 );
   } // f hooks
@@ -35,6 +35,16 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     return true;
   } // f install
 
+  /**
+   * Include css ,js
+   * @param int $p_event
+   * @return string
+   */
+  function resources( $p_event){
+    $resource  = '<link href="' . plugin_file( 'Mantis_ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
+    $resource .= '<script type="text/javascript" src="' . plugin_file( 'Mantis_ImagePasteOnComment.js' ) . '"></script>';
+    return $resource;
+  } // f resources
 
   /**
    * Formatted text processing.
@@ -91,12 +101,13 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $p_image_id = empty($match[2]) === false ? $match[2] : null;
     //error_log('$match'.print_r($match,true),3,'/tmp/test.log');
     preg_match('/^,rate(\d+).*/',$match[3],$match_rate);
-    $p_image_rate = empty($match_rate[1]) === false ? 'width:'.($match_rate[1] * 0.7).'%;'  : null;
+    $p_image_rate      = empty($match_rate[1]) === false ? 'width:'.($match_rate[1] * 0.7).'%;'  : null;
+    $p_image_rate_html = empty($match_rate[1]) === false ? ($match_rate[1] * 0.7).'%;'  : null;
     //error_log('$match_rate:'.print_r($match_rate,true),3,'/tmp/test.log');
   
     $security_param  = form_security_param( 'file_show_inline' );
     $image_link      = <<< _HTML_
-    <img class="Mantis_ImagePasteOnComment" alt="" style="{$p_image_rate}" 
+    <img class="Mantis_ImagePasteOnComment" style="{$p_image_rate}" width="{$p_image_rate_html}"
          src="file_download.php?file_id=${p_image_id}&type=bug&show_inline=1{$security_param}" >
   <br 
 _HTML_;
@@ -109,7 +120,7 @@ _HTML_;
    * @param int $p_image_id
    * @return string
    */
-  function string_process_image_link( $p_string){
+  function string_process_image_link( $p_string ){
     $p_string = preg_replace_callback(
                 '/(^|[^\w])' 
               . preg_quote( '%[', '/' ) . '(\d+)'.preg_quote( ']', '/' )
@@ -118,16 +129,6 @@ _HTML_;
         return $p_string ;
   } // f string_process_image_link
 
-  /**
-   * Include css ,js
-   * @param int $p_event
-   * @return string
-   */
-  function resources( $p_event){
-    $resource  = '<link href="' . plugin_file( 'Mantis_ImagePasteOnComment.css' ) . '" media="all" rel="stylesheet" type="text/css"/>';
-    $resource .= '<script type="text/javascript" src="' . plugin_file( 'Mantis_ImagePasteOnComment.js' ) . '"></script>';
-    return $resource;
-  } // f resources
 
   /**
    * Display click for insert field
