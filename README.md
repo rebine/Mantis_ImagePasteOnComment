@@ -1,5 +1,5 @@
 # Mantis_ImagePasteOnComment
-Mantis Plugin ImagePasteOnComment develop.
+Mantis Plugin ImagePasteOnComment .
 
 # Requirements
 Mantis bt 1.3.0 higher.
@@ -8,9 +8,10 @@ This plugin require high priority than 'MantisBT Core Formatting'.
 ![priority](Screenshots/ImagePasteOnComment.sc01.png)
 
 # Usage
-Write comment.
-
+To write comment with this.
+---
 %[file_id],rate100
+---
 
 file_id is below example.
 
@@ -18,6 +19,32 @@ http://example.com/mantis/file_download.php?file_id=1&type=bug
 ![file id](Screenshots/ImagePasteOnComment.sc02.png)
 
 rate100 is 100% width at comment field.
+
+# Description
+This is the plug-in for putting the images into the commentation.
+Because Patch1.2.0series did not have "EVENT_VIEW_BUG_ATTACHMENT" as a event, we add such function in Patch1.3.0 series. We added branch on mantisbt12.
+
+The images which uploaded to MantisBT, has its own ID, the preview of images will  be shown same width as the comment size if you write down that ID on %[file_ed].
+
+
+## About Rate
+
+Rate 100 means the width 100%.the aspect ratio keeps its rate as when the image is uploaded. If you want to change the vertical size, you should look for other plug-in.(the patch is made by who would not be bothered to adjust the size finely as long as the width is right size)
+
+we suggest that it would be much simpler if you define the changing rate as rate10,rate30,rate70,rate100,rate150
+
+
+## Priolity of the Plug-in
+
+because this Plug-in expand the MantisBT CoreFormatting, it needs the MantisBT CoreFormatting. But if the priolity number is same as the MantisBT Core, then the image would not be shown.
+thus the priolity number of this plug-in should be smaller than MantisBT CoreFormatting.
+
+
+## Function for adding the images to text area
+
+the list of the images will be shown when the image file is uploaded,
+then click the area of blue coloured word "Click this", then %[1],rate100 will be enterd automatically.
+
 
 # 説明
 英語は下手なので日本語でざっくりと説明すると、
@@ -58,13 +85,20 @@ MantisBT Core Formattingよりも小さくしてください。
 - 「EVENT_VIEW_BUG_ATTACHMENT」のreturnに文字列を入れているのに
  $p_attachmentの情報が配列として追加されてしまい、$t_prefixにはいって
  表示にArrayがついてしまう。この謎を解きたいが…書き方募集中
+- クリックする部分を英語（まともな）と日本語にしたいと思います。
 
 # 募集
-- 説明の素敵な英訳
 - スタイルシートの素敵なサンプル
 - 「EVENT_VIEW_BUG_ATTACHMENT」への関数の書き方
 
 # スクリーンショットに出ている画像について
 https://jp.fotolia.com/id/51565496
+
 作者：christine krahl
+
 fotoliaにてXS画像を購入して使いました。
+
+# 説明の素敵な英訳
+Thanks!!
+
+Kalm@Answerer
