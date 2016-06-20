@@ -1,11 +1,11 @@
+  window.addEventListener("load", function(){
 
-  window.onload = function(){
-
-    [].forEach.call( document.getElementsByClassName("Mantis_ImagePasteOnComment_Insert"),function(x){
-      x.addEventListener("click",mantis_imagepasteoncomment_insert_textarea);
-    });
-
-  } // window onload
+      [].forEach.call( document.getElementsByClassName("Mantis_ImagePasteOnComment_Insert"),function(x){
+        x.addEventListener("click",mantis_imagepasteoncomment_insert_textarea);
+      });
+  
+    } // window onload
+  , false); // window addEventListener
 
   function mantis_imagepasteoncomment_insert_textarea(mouseevent){
     var return_flg = false;
