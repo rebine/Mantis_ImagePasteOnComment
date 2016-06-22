@@ -10,7 +10,7 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '1.0.1';
+    $this->version = '1.0.2';
     $this->requires = array(
       'MantisCore' => '1.3.0',
     );
@@ -93,7 +93,7 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
 
 
   /**
-   * return an href anchor that links to a bug COMMENT page for the given images uploaded
+   * return an href anchor that links to a bug COMMENT page for the given images uploaded or download link at others
    * @param int $p_image_id
    * @return string
    */
@@ -105,12 +105,34 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $p_image_rate_html = empty($match_rate[1]) === false ? ($match_rate[1] * 0.7).'%;'  : null;
     //error_log('$match_rate:'.print_r($match_rate,true),3,'/tmp/test.log');
   
+    $attached_file['type']       = file_get_field($p_image_id,'file_type');
+ 
     $security_param  = form_security_param( 'file_show_inline' );
-    $image_link      = <<< _HTML_
+
+    if (empty($attached_file['type']) !== false){
+      return 'Attached file not found <br ';
+    } // if empty attached_file
+
+    if (strpos($attached_file['type'] ,'image') !== false){
+
+      $image_link      = <<< _HTML_
     <img class="Mantis_ImagePasteOnComment" style="{$p_image_rate}" width="{$p_image_rate_html}"
-         src="file_download.php?file_id=${p_image_id}&type=bug&show_inline=1{$security_param}" >
+         src="file_download.php?file_id={$p_image_id}&type=bug&show_inline=1{$security_param}" >
   <br 
 _HTML_;
+
+    }else{
+
+      $attached_file['filename']   = file_get_field($p_image_id,'filename');
+      $image_link      = <<< _HTML_
+    Attached filename:  
+    <a href="file_download.php?file_id={$p_image_id}&type=bug&show_inline=1{$security_param}" >
+      {$attached_file['filename']}
+    </a>
+
+_HTML_;
+
+    } // if $attached_file
    
     return $image_link;
   } // f string_get_bug_image_link
@@ -137,14 +159,20 @@ _HTML_;
    * @return void
    */
   function display_click_field( $p_event ,$p_attachment ) {
+
+    $t_show_attachment_preview = $p_attachment['preview'] && $p_attachment['exists'] && ( $p_attachment['type'] == 'text' || $p_attachment['type'] == 'image' );
    
+    if($t_show_attachment_preview){
     $display_field =<<< _HTML_
     <div id="ImagePasteOnComment_{$p_attachment['id']}" class="Mantis_ImagePasteOnComment_Insert" >
-      << Click this for inserting text area
+      << Click here to insert image tag in text area
       ID: {$p_attachment['id']}
     </div>
 
 _HTML_;
+    }else{
+      $display_field = '';
+    } // if $t_show_attachment_previe
     return $display_field;
 
   } // f display_click_field
