@@ -1,0 +1,5 @@
+<?php
+
+$s_plugin_Mantis_ImagePasteOnComment_header_click_strings = 'ここをクリックすると、コメントにタグが追加されます。';
+$s_plugin_Mantis_ImagePasteOnComment_notfound_string = 'そのidのファイルは存在しません。<br ';
+

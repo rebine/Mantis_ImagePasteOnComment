@@ -10,7 +10,7 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '1.0.2';
+    $this->version = '1.0.3';
     $this->requires = array(
       'MantisCore' => '1.3.0',
     );
@@ -110,7 +110,8 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $security_param  = form_security_param( 'file_show_inline' );
 
     if (empty($attached_file['type']) !== false){
-      return 'Attached file not found <br ';
+      $notfound_string = plugin_lang_get('notfound_string');
+      return $notfound_string;
     } // if empty attached_file
 
     if (strpos($attached_file['type'] ,'image') !== false){
@@ -161,11 +162,12 @@ _HTML_;
   function display_click_field( $p_event ,$p_attachment ) {
 
     $t_show_attachment_preview = $p_attachment['preview'] && $p_attachment['exists'] && ( $p_attachment['type'] == 'text' || $p_attachment['type'] == 'image' );
+    $header_click_strings = plugin_lang_get('header_click_strings');
    
     if($t_show_attachment_preview){
     $display_field =<<< _HTML_
     <div id="ImagePasteOnComment_{$p_attachment['id']}" class="Mantis_ImagePasteOnComment_Insert" >
-      << Click here to insert image tag in text area
+      << {$header_click_strings}
       ID: {$p_attachment['id']}
     </div>
 

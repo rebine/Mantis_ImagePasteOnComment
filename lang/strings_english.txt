@@ -1,0 +1,4 @@
+<?php
+
+$s_plugin_Mantis_ImagePasteOnComment_header_click_strings = 'Click here to insert image tag in text area';
+$s_plugin_Mantis_ImagePasteOnComment_notfound_string = 'Attached file not found <br ';
