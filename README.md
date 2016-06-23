@@ -24,7 +24,7 @@ rate100 is 100% width at comment field.
 This is the plug-in for putting the images into the commentation.
 Because Patch1.2.0series did not have "EVENT_VIEW_BUG_ATTACHMENT" as a event, we add such function in Patch1.3.0 series. We added branch on mantisbt12.
 
-The images which uploaded to MantisBT, has its own ID, the preview of images will  be shown same width as the comment size if you write down that ID on %[file_ed].
+The images which uploaded to MantisBT, has its own ID, the preview of images will  be shown same width as the comment size if you write down that ID on %[file_id].
 
 
 ## About Rate
@@ -105,6 +105,6 @@ Thanks!!
 Kalm@Answerer
 
 # 変更履歴
-1.0.2 ファイルが画像以外の場合、IDのファイルが存在しない場合を追加
-1.0.1 javascriptをwindow.onload直接呼出しから、AddEventHanderに変更。
-1.0.0 ある程度の使用に耐えれる状態なので公開開始
+- 1.0.2 ファイルが画像以外の場合、IDのファイルが存在しない場合を追加
+- 1.0.1 javascriptをwindow.onload直接呼出しから、AddEventHanderに変更。
+- 1.0.0 ある程度の使用に耐えれる状態なので公開開始
