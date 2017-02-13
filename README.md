@@ -2,10 +2,9 @@
 Mantis Plugin Mantis_ImagePasteOnComment .
 
 # Requirements
-Mantis bt 1.3.0 higher.
-
-This plugin require high priority than 'MantisBT Core Formatting'.
-![priority](Screenshots/ImagePasteOnComment.sc01.png)
+Mantis bt 2.0.0 higher.
+See branch [mantis13](https://github.com/rebine/Mantis_ImagePasteOnComment/tree/mantis13) for Mantis bt 1.3.0. 
+This Plug-in expand the MantisBT CoreFormatting, it needs the MantisBT CoreFormatting. 
 
 # Usage
 To write comment with this.
@@ -34,12 +33,6 @@ Rate 100 means the width 100%.the aspect ratio keeps its rate as when the image 
 we suggest that it would be much simpler if you define the changing rate as rate10,rate30,rate70,rate100,rate150
 
 
-## Priolity of the Plug-in
-
-because this Plug-in expand the MantisBT CoreFormatting, it needs the MantisBT CoreFormatting. But if the priolity number is same as the MantisBT Core, then the image would not be shown.
-thus the priolity number of this plug-in should be smaller than MantisBT CoreFormatting.
-
-
 ## Function for adding the images to text area
 
 the list of the images will be shown when the image file is uploaded,
@@ -51,6 +44,7 @@ then click the area of blue coloured word "Click this", then %[1],rate100 will b
 アップロードした画像をコメントの部分に張り込めるプラグインです。
 1.2.0系では「EVENT_VIEW_BUG_ATTACHMENT」のイベントがなかったので、1.3.0系にしました。
 branchをmantisbt12に分けています。
+mantis2.0系はバージョン表記だけで動作したので、以前の状態はbranchをmantisbt13に分けています。
 
 MantisBTのアップロードされた画像は固有のIDがついているので
 それを%[file_id]の部分に書き込んでもらえれば、プレビュー画像を
@@ -65,13 +59,8 @@ rate10,rate30,rate70,rate100,rate150など、変化させる値も大体こう�
 決めておいたほうが楽だと思います。
 
 ## プラグイン優先度
-あと、プラグインはMantisBT Coreを拡張しているので必要なのですが、
-優先度が同じだと表示されません。このプラグインの優先度の数字を
-MantisBT Core Formattingよりも小さくしてください。
-
-例:
-  Mantis ImagePasteOnComment  -> 2
-  MantisBT Core Formatting    -> 3
+プラグインはMantisBT Coreを拡張しているので必要です。
+2.0系で試したら優先度が同じでも動作するようになりました。
 
 ## テキストエリアへの挿入機能
 画像ファイルをアップロードした後に、ファイル一覧が出ます。
@@ -104,6 +93,7 @@ Thanks!!
 Kalm@Answerer
 
 # 変更履歴
+- 1.2.0 Mantis 2.0.X に対応。（requireを変更した。優先度の変更が不要になった）
 - 1.0.3 表示文言を一部日本語と英語に変更。
 - 1.0.2 ファイルが画像以外の場合、IDのファイルが存在しない場合を追加
 - 1.0.1 javascriptをwindow.onload直接呼出しから、AddEventHanderに変更。

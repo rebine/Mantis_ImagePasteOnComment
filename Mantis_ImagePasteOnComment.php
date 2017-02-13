@@ -10,9 +10,9 @@ class Mantis_ImagePasteOnCommentPlugin extends MantisFormattingPlugin {
     $this->description = 'CommentsでImageファイルをインラインに表示するPlugin';
     $this->page = '';         
 
-    $this->version = '1.0.3';
+    $this->version = '1.2.0';
     $this->requires = array(
-      'MantisCore' => '1.3.0',
+      'MantisCore' => '2.0.0',
     );
 
     $this->author = 'Ryuji Ebine';
